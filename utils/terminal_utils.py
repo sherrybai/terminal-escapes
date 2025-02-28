@@ -1,6 +1,4 @@
-import os
 import sys
-import signal
 import shutil
 
 def clear_screen():

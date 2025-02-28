@@ -1,13 +1,10 @@
 import os
-import sys
 import ffmpeg
 from PIL import Image
 
-SPACE_CHARS = "  "
+from utils.file_utils import remove_extension, num_bmp_files_in_directory
 
-def remove_extension(filepath):
-    basename = os.path.basename(filepath)
-    return os.path.splitext(basename)[0]
+SPACE_CHARS = "  "
 
 def extract_frames(filepath: str):
     frames_directory = f'./media/frames/{remove_extension(filepath)}'
@@ -22,7 +19,10 @@ def extract_frames(filepath: str):
             print('stdout:', e.stdout.decode('utf8'))
             print('stderr:', e.stderr.decode('utf8'))
             raise e
+        # return number of files in directory
+    return num_bmp_files_in_directory(frames_directory)
         
+
 def bmp_to_pil(bmp_path, width, height):
     try:
         img = Image.open(bmp_path).convert("RGB")
@@ -36,13 +36,17 @@ def bmp_to_pil(bmp_path, width, height):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-def print_pixel(r, g, b):
-    sys.stdout.write(f"\033[48;2;{r};{g};{b}m{SPACE_CHARS}\033[0m")
 
-def display_pil_with_ansi_colors(image):
+def pixel_to_ansi_color(r, g, b):
+    return f"\033[48;2;{r};{g};{b}m{SPACE_CHARS}\033[0m"
+
+
+def pil_to_ansi_string(image):
+    img_as_str = ""
     width, height = image.size
     for y in range(height):
         for x in range(width):
             r, g, b = image.getpixel((x, y))
-            print_pixel(r, g, b)
-        sys.stdout.write("\n")
+            img_as_str += pixel_to_ansi_color(r, g, b)
+        img_as_str += "\n"
+    return img_as_str
