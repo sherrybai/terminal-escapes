@@ -10,5 +10,5 @@ uv run main.py
 ```
 To play a different MP4 file, pass filename as a command-line argument:
 ```
-uv run main.py [PATH_TO_FILE]
+uv run main.py /path/to/video.mp4
 ```
