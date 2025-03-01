@@ -14,7 +14,7 @@ def increment_counter():
     for _ in range(num_frames):
         counter += 1
         redraw_content()
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 
 def handle_resize(signum, frame):
@@ -34,7 +34,8 @@ def redraw_content():
     # display the photo with spaces of different background colors
     bmp_path = f"./media/frames/gentle_waves_at_sunrise/frame-{counter:04}.bmp"
     image = bmp_to_pil(bmp_path, terminal_width, terminal_height)
-    print(pil_to_ansi_string(image))
+    sys.stdout.write(pil_to_ansi_string(image))
+    sys.stdout.flush()
 
 
 if __name__ == "__main__":

@@ -38,15 +38,16 @@ def bmp_to_pil(bmp_path, width, height):
 
 
 def pixel_to_ansi_color(r, g, b):
-    return f"\033[48;2;{r};{g};{b}m{SPACE_CHARS}\033[0m"
+    return f"\033[48;2;{r};{g};{b}m{SPACE_CHARS}"
 
 
 def pil_to_ansi_string(image):
-    img_as_str = ""
+    img_rows = []
     width, height = image.size
     for y in range(height):
+        row = ""
         for x in range(width):
             r, g, b = image.getpixel((x, y))
-            img_as_str += pixel_to_ansi_color(r, g, b)
-        img_as_str += "\n"
-    return img_as_str
+            row += pixel_to_ansi_color(r, g, b)
+        img_rows.append(row)
+    return "\n".join(img_rows) + "\033[0m"
