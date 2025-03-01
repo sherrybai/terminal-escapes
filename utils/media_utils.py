@@ -6,22 +6,22 @@ from utils.file_utils import remove_extension, num_bmp_files_in_directory
 
 SPACE_CHARS = "  "
 
+
 def extract_frames(filepath: str):
-    frames_directory = f'./media/frames/{remove_extension(filepath)}'
+    frames_directory = f"./media/frames/{remove_extension(filepath)}"
     if not os.path.exists(frames_directory):
         os.makedirs(frames_directory)
         try:
-            ffmpeg.input(filepath, ss=0, r=60) \
-                        .output(f'{frames_directory}/frame-%04d.bmp', start_number=0) \
-                        .overwrite_output() \
-                        .run(capture_stdout=True, capture_stderr=True)
+            ffmpeg.input(filepath, ss=0, r=60).output(
+                f"{frames_directory}/frame-%04d.bmp", start_number=0
+            ).overwrite_output().run(capture_stdout=True, capture_stderr=True)
         except ffmpeg.Error as e:
-            print('stdout:', e.stdout.decode('utf8'))
-            print('stderr:', e.stderr.decode('utf8'))
+            print("stdout:", e.stdout.decode("utf8"))
+            print("stderr:", e.stderr.decode("utf8"))
             raise e
         # return number of files in directory
     return num_bmp_files_in_directory(frames_directory)
-        
+
 
 def bmp_to_pil(bmp_path, width, height):
     try:

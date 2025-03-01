@@ -30,12 +30,12 @@ def redraw_content():
     """Example function to redraw content based on terminal size."""
     global terminal_width, terminal_height, counter
     clear_screen()
-    
+
     # display the photo with spaces of different background colors
     bmp_path = f"./media/frames/gentle_waves_at_sunrise/frame-{counter:04}.bmp"
     image = bmp_to_pil(bmp_path, terminal_width, terminal_height)
     print(pil_to_ansi_string(image))
-    
+
 
 if __name__ == "__main__":
     terminal_width, terminal_height = get_terminal_size()
@@ -45,7 +45,9 @@ if __name__ == "__main__":
     num_frames = extract_frames(video_path)
 
     # Register the signal handler for terminal resize
-    signal.signal(signal.SIGWINCH, handle_resize) # SIGWINCH is the signal sent when the terminal is resized.
+    signal.signal(
+        signal.SIGWINCH, handle_resize
+    )  # SIGWINCH is the signal sent when the terminal is resized.
 
     # Start a thread to increment the global counter
     counter = 0
