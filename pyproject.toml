@@ -1,0 +1,12 @@
+[project]
+name = "terminal-escapes"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "black>=25.1.0",
+    "ffmpeg-python>=0.2.0",
+    "opencv-python>=4.11.0.86",
+    "pillow>=11.1.0",
+]
